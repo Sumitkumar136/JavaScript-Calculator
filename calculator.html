@@ -1,0 +1,260 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+       <meta name="viewport" content="width=device-width, initial-scale=1.0">
+       <title>Calculator using JavaScript</title>
+       <link rel="preconnect" href="https://fonts.googleapis.com">
+       <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+       <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    </head>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            box-sizing: border-box;
+        }
+        .container {
+            width: 100%;
+            height: 100vh;
+            background: linear-gradient(135deg, #1a2a6c, #8be4f6, #1a2a6c);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        @keyframes gradientBG {
+            0% {background-position: 0% 50%;}
+            50% {background-position: 100% 50%;}
+            100% {background-position: 0% 50%;}
+        }
+        
+        .calculator {
+            background: rgba(20, 30, 48, 0.9);
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3), 
+                        0 5px 15px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(139, 228, 246, 0.2);
+            max-width: 400px;
+            width: 100%;
+        }
+        
+        .calculator form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .calculator form > div {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+        
+        .calculator form input {
+            border: 0;
+            outline: 0;
+            width: 100%;
+            height: 70px;
+            border-radius: 15px;
+            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3), 
+                        -5px -5px 10px rgba(139, 228, 246, 0.1);
+            background: linear-gradient(145deg, #2a3f5f, #1e2a3a);
+            font-size: 24px;
+            color: #e6f7ff;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-weight: 500;
+        }
+        
+        .calculator form input:hover {
+            background: linear-gradient(145deg, #3a4f6f, #2a3a4a);
+            transform: translateY(-2px);
+            box-shadow: 5px 7px 15px rgba(0, 0, 0, 0.4), 
+                        -5px -5px 10px rgba(139, 228, 246, 0.15);
+        }
+        
+        .calculator form input:active {
+            transform: translateY(1px);
+            box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.3), 
+                        inset -2px -2px 5px rgba(139, 228, 246, 0.1);
+        }
+        
+        .display {
+            display: flex;
+            justify-content: flex-end;
+            margin: 20px 0;
+        }
+        
+        .display input {
+            text-align: right;
+            flex: 1;
+            font-size: 45px;
+            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.5);
+            background: linear-gradient(145deg, #0a1628, #051018);
+            color: #8be4f6;
+            border-radius: 15px;
+            padding: 10px 20px;
+            border: none;
+        }
+        
+        form input.equal {
+            background: linear-gradient(145deg, #2a5298, #1a3a6c);
+            color: #fff;
+            width: 100%;
+        }
+        
+        form input.equal:hover {
+            background: linear-gradient(145deg, #3a62a8, #2a4a7c);
+        }
+        
+        form input.operater {
+            color: #8be4f6;
+            background: linear-gradient(145deg, #1e3a5a, #142838);
+        }
+        
+        form input.operater:hover {
+            color: #ffffff;
+            background: linear-gradient(145deg, #2e4a6a, #243848);
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 480px) {
+            .calculator {
+                padding: 15px;
+                margin: 0 20px;
+            }
+            
+            .calculator form input {
+                height: 60px;
+                font-size: 20px;
+            }
+            
+            .display input {
+                font-size: 36px;
+            }
+        }
+    </style>
+    <body>
+        <div class="container"> 
+            <div class="calculator">
+                <form>
+                    <div class="display">
+                        <input type="text" name="display" id="displayInput">
+                    </div>
+                    <div>
+                        <input type="button" value="AC" onclick="clearDisplay()" class="operater">
+                        <input type="button" value="DE" onclick="deleteLast()" class="operater">
+                        <input type="button" value="." onclick="appendToDisplay('.')" class="operater">
+                        <input type="button" value="/" onclick="appendToDisplay('/')" class="operater">
+                    </div>
+                    <div>
+                        <input type="button" value="7" onclick="appendToDisplay('7')">
+                        <input type="button" value="8" onclick="appendToDisplay('8')">
+                        <input type="button" value="9" onclick="appendToDisplay('9')">
+                        <input type="button" value="*" onclick="appendToDisplay('*')" class="operater">
+                    </div>
+                    <div>
+                        <input type="button" value="4" onclick="appendToDisplay('4')">
+                        <input type="button" value="5" onclick="appendToDisplay('5')">
+                        <input type="button" value="6" onclick="appendToDisplay('6')">
+                        <input type="button" value="-" onclick="appendToDisplay('-')" class="operater">
+                    </div>
+                    <div>
+                        <input type="button" value="1" onclick="appendToDisplay('1')">
+                        <input type="button" value="2" onclick="appendToDisplay('2')">
+                        <input type="button" value="3" onclick="appendToDisplay('3')">
+                        <input type="button" value="+" onclick="appendToDisplay('+')" class="operater">
+                    </div>
+                    <div>
+                        <input type="button" value="00" onclick="appendToDisplay('00')">
+                        <input type="button" value="0" onclick="appendToDisplay('0')">
+                        <input type="button" value="=" onclick="calculateResult()" class="equal operater">
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <script>
+            const displayInput = document.getElementById('displayInput');
+            let calculationCompleted = false;
+            
+            function appendToDisplay(value) {
+                // Check if calculation was completed and the new input is a number
+                if (calculationCompleted && !isNaN(value)) {
+                    // If it's a number after calculation, clear display first
+                    displayInput.value = value;
+                    calculationCompleted = false;
+                } else {
+                    // Normal operation
+                    displayInput.value += value;
+                    // If an operator is used after calculation, reset the flag
+                    if (calculationCompleted && isNaN(value)) {
+                        calculationCompleted = false;
+                    }
+                }
+            }
+            
+            function clearDisplay() {
+                displayInput.value = '';
+                calculationCompleted = false;
+            }
+            
+            function deleteLast() {
+                displayInput.value = displayInput.value.toString().slice(0, -1);
+            }
+            
+            function calculateResult() {
+                try {
+                    // Check if the expression is valid
+                    if (displayInput.value === '') {
+                        displayInput.value = '';
+                        return;
+                    }
+                    
+                    // Evaluate the expression
+                    const result = eval(displayInput.value);
+                    
+                    // Format the result to avoid long decimal places
+                    if (result % 1 === 0) {
+                        displayInput.value = result;
+                    } else {
+                        displayInput.value = parseFloat(result.toFixed(8));
+                    }
+                    
+                    // Mark that a calculation has been completed
+                    calculationCompleted = true;
+                } catch (error) {
+                    displayInput.value = 'Error';
+                    setTimeout(() => {
+                        displayInput.value = '';
+                        calculationCompleted = false;
+                    }, 1500);
+                }
+            }
+            
+            // Add keyboard support
+            document.addEventListener('keydown', function(event) {
+                const key = event.key;
+                
+                if (key >= '0' && key <= '9') {
+                    appendToDisplay(key);
+                } else if (key === '.') {
+                    appendToDisplay('.');
+                } else if (key === '+' || key === '-' || key === '*' || key === '/') {
+                    appendToDisplay(key);
+                } else if (key === 'Enter' || key === '=') {
+                    calculateResult();
+                } else if (key === 'Escape') {
+                    clearDisplay();
+                } else if (key === 'Backspace') {
+                    deleteLast();
+                }
+            });
+        </script>
+    </body>
+</html>
